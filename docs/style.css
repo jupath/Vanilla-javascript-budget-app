@@ -2386,15 +2386,22 @@ body {
         display: block;
         margin-top: 20px;
         margin-bottom: 30px; }
+        @media screen and (min-width: 768px) {
+          body .container .form-wrapper form input[type="number"] {
+            width: 90px; } }
+        @media screen and (min-width: 768px) {
+          body .container .form-wrapper form input[type="text"] {
+            width: 300px; } }
         body .container .form-wrapper form input,
         body .container .form-wrapper form button,
         body .container .form-wrapper form select {
           border-radius: 0;
           height: 40px; }
-        body .container .form-wrapper form input[type="number"] {
-          width: 90px; }
-        body .container .form-wrapper form input[type="text"] {
-          width: 300px; }
+          @media screen and (max-width: 767px) {
+            body .container .form-wrapper form input,
+            body .container .form-wrapper form button,
+            body .container .form-wrapper form select {
+              width: 100%; } }
         body .container .form-wrapper form select {
           margin-top: -1px; }
     body .container .lists-wrapper .list-header {
