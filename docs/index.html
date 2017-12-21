@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Budget app</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Budgeter</h1>
+            <p class="text-center">Keep track of your money</p>
+            <h3>Total budget: <span id="total-budget">$0.00</span></h3>
+            <h4>Total income: <span id="total-incomes">$0.00</span></h4>
+            <h4>Total expenses: <span id="total-expenses">$0.00</span></h4>
+
+            <div class="form-wrapper">
+                <form id="budget-form" class="form-inline">
+                   <div class="form-group">
+                        <select name="type" class="form-control">
+                            <option value="inc">+</option>
+                            <option value="exp">-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="text" class="form-control" placeholder="Add description">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="amount" class="form-control" min="0" step="0.01" placeholder="Value">
+                    </div>
+                    <button class="btn btn-success">SAVE</button>
+                </form>
+            </div>
+            <div class="lists-wrapper">
+                <div class="row">
+                     <div class="col-sm-6">
+                        <div class="list-header">Income <span class="pull-right">Sort by value: <a class="sort" data-sort="inc-asc"  title="Ascending">&#x25B2;</a> <a class="sort" data-sort="inc-desc" title="Descending">&#x25BC;</a></span></div>
+                        <ul class="list" id="inc-list"></ul>
+                     </div>
+                     <div class="col-sm-6">
+                        <div class="list-header">Expenses <span class="pull-right">Sort by value: <a class="sort" data-sort="exp-asc" title="Ascending">&#x25B2;</a> <a class="sort" data-sort="exp-desc" title="Descending">&#x25BC;</a></span></div>
+                        <ul class="list" id="exp-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <p class="footer">View <a href="">source on Github</a></p>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>

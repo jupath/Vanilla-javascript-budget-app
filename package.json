@@ -1,0 +1,11 @@
+{
+  "name": "budget-app",
+  "version": "1.0.0",
+  "description": "Simple budget app to keep your money tracked",
+  "main": "app.js",
+  "author": "Attila Taligas",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7"
+  }
+}
