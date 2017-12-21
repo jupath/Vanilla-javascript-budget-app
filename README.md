@@ -9,4 +9,4 @@ sass style.scss ../style.css
 ```
 You can add and delete all of your incomes and expenses and keep track of your money. :)
 
-[DEMO PAGE HERE](https://jupath.github.io/)
+[DEMO PAGE HERE](https://jupath.github.io/Vanilla-javascript-budget-app/)
