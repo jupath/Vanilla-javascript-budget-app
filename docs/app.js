@@ -3,7 +3,7 @@
  /*
  * DATA MODUL
  **************************************************************/
-const dataModul = (function() {
+const budgetData = (function() {
 
     // Data structure. Use localstorage data if exists
     let data = {
@@ -95,7 +95,7 @@ const dataModul = (function() {
  /*
  * UI MODUL
 **************************************************************/
-const UIModul = (function() {
+const budgetUI = (function() {
 
     function DOMStrings() {
         return {
@@ -154,13 +154,13 @@ const UIModul = (function() {
  /*
  * CONTROLLER MODUL
 **************************************************************/
-const controllerModul = (function(dataModul, UIModul) {
+const controller = (function(budgetData, budgetUI) {
 
     function setupEventListeners() {
-        document.querySelector(UIModul.DOMStrings().budgetForm).addEventListener('submit', addItem);
+        document.querySelector(budgetUI.DOMStrings().budgetForm).addEventListener('submit', addItem);
         // We listen to the #list-wrapper DOM element, using event bubbling to catch delete and sort event
-        document.querySelector(UIModul.DOMStrings().listsWrapper).addEventListener('click', deleteItem);
-        document.querySelector(UIModul.DOMStrings().listsWrapper).addEventListener('click', sortItems);
+        document.querySelector(budgetUI.DOMStrings().listsWrapper).addEventListener('click', deleteItem);
+        document.querySelector(budgetUI.DOMStrings().listsWrapper).addEventListener('click', sortItems);
     }
 
     function addItem(event) {
@@ -175,9 +175,9 @@ const controllerModul = (function(dataModul, UIModul) {
         const amount = parseFloat(event.target.elements['amount'].value);
 
         // Add new item to the data structure and get back the id of the new element
-        const id = dataModul.addNewItem(type, text, amount);
+        const id = budgetData.addNewItem(type, text, amount);
         // Add new item to the UI
-        UIModul.addItemUI(type, id, text, amount);
+        budgetUI.addItemUI(type, id, text, amount);
         updateBudget(type, amount);
 
         // Clear form but keep the state of the select box
@@ -185,7 +185,7 @@ const controllerModul = (function(dataModul, UIModul) {
         this.elements['amount'].value = '';
 
         // Jump to the text input field
-        document.querySelector(UIModul.DOMStrings().textField).focus();
+        document.querySelector(budgetUI.DOMStrings().textField).focus();
     }
 
     function deleteItem(event) {
@@ -196,24 +196,24 @@ const controllerModul = (function(dataModul, UIModul) {
         // Split id. It looks something like 'inc-0'
         const arrDel = event.target.id.split('-');
 
-        dataModul.deleteItemData(arrDel[0], parseInt(arrDel[1]));
-        UIModul.deleteItemUI(event.target);
+        budgetData.deleteItemData(arrDel[0], parseInt(arrDel[1]));
+        budgetUI.deleteItemUI(event.target);
 
-        const totalBudget = dataModul.getTotals().totalBudget;
-        const totalExp = dataModul.getTotals().totalExpenses;
-        const totalInc = dataModul.getTotals().totalIncomes;
+        const totalBudget = budgetData.getTotals().totalBudget;
+        const totalExp = budgetData.getTotals().totalExpenses;
+        const totalInc = budgetData.getTotals().totalIncomes;
 
-        UIModul.updateBudgetUI(totalBudget, totalExp, totalInc);
+        budgetUI.updateBudgetUI(totalBudget, totalExp, totalInc);
     }
 
     function updateBudget(type, amount) {
-        dataModul.updateBudgetData(type, amount);
+        budgetData.updateBudgetData(type, amount);
 
-        const totalBudget = dataModul.getTotals().totalBudget;
-        const totalExp = dataModul.getTotals().totalExpenses;
-        const totalInc = dataModul.getTotals().totalIncomes;
+        const totalBudget = budgetData.getTotals().totalBudget;
+        const totalExp = budgetData.getTotals().totalExpenses;
+        const totalInc = budgetData.getTotals().totalIncomes;
 
-        UIModul.updateBudgetUI(totalBudget, totalExp, totalInc);
+        budgetUI.updateBudgetUI(totalBudget, totalExp, totalInc);
     }
 
     function sortItems() {
@@ -223,28 +223,28 @@ const controllerModul = (function(dataModul, UIModul) {
         // Split data-sort attribute. It looks something like 'inc-asc' or 'exp-desc' etc.
         const arrSort = event.target.dataset.sort.split('-');
 
-        const sortedList = dataModul.sortItemsData(arrSort[0], arrSort[1]);
-        UIModul.displayListUI(arrSort[0], sortedList);
+        const sortedList = budgetData.sortItemsData(arrSort[0], arrSort[1]);
+        budgetUI.displayListUI(arrSort[0], sortedList);
     }
 
     // Use localstorage data if exists
     function checkLocalStorage() {
-        const storedInc = dataModul.getItems('inc');
-        const storedExp = dataModul.getItems('exp');;
+        const storedInc = budgetData.getItems('inc');
+        const storedExp = budgetData.getItems('exp');;
 
         if ( storedInc.length > 0 ) {
-            UIModul.displayListUI('inc', storedInc);
+            budgetUI.displayListUI('inc', storedInc);
         }
 
         if ( storedExp.length > 0 ) {
-            UIModul.displayListUI('exp', storedExp);
+            budgetUI.displayListUI('exp', storedExp);
         }
 
-        const totalBudget = dataModul.getTotals().totalBudget;
-        const totalExp = dataModul.getTotals().totalExpenses;
-        const totalInc = dataModul.getTotals().totalIncomes;
+        const totalBudget = budgetData.getTotals().totalBudget;
+        const totalExp = budgetData.getTotals().totalExpenses;
+        const totalInc = budgetData.getTotals().totalIncomes;
 
-        UIModul.updateBudgetUI(totalBudget, totalExp, totalInc);
+        budgetUI.updateBudgetUI(totalBudget, totalExp, totalInc);
     }
 
     return {
@@ -254,6 +254,6 @@ const controllerModul = (function(dataModul, UIModul) {
         }
     }
 
-})(dataModul, UIModul);
+})(budgetData, budgetUI);
 
-controllerModul.init();
+controller.init();
