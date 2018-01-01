@@ -26,7 +26,7 @@ const budgetData = (function() {
     }
 
     return {
-        addNewItem: function(type, text, amount) {
+        addNewItem(type, text, amount) {
             // Create an ID for the item object. If there is no element in the array the id is 0, in other cases find the biggest id and add 1
             const id = data.items[type].length === 0 ? 0 : Math.max(...data.items[type].map( cur => cur.id )) + 1;
 
@@ -42,10 +42,10 @@ const budgetData = (function() {
 
             return id;
         },
-        getItems: function(type) {
+        getItems(type) {
             return data.items[type];
         },
-        updateBudgetData: function(type, amount) {
+        updateBudgetData(type, amount) {
             data.totals[type] += amount;
             data.totalBudget = data.totals.inc - data.totals.exp;
 
@@ -58,14 +58,14 @@ const budgetData = (function() {
             localStorage.setItem(totaltype, JSON.stringify(total));
             localStorage.setItem('totalBudget', JSON.stringify(totalBudget));
         },
-        getTotals: function() {
+        getTotals() {
             return {
                 totalBudget: data.totalBudget,
                 totalExpenses: data.totals.exp,
                 totalIncomes: data.totals.inc
             }
         },
-        deleteItemData: function(type, id) {
+        deleteItemData(type, id) {
             // Let's find the object in the array we want to delete
             const obj = data.items[type].find( cur => cur.id === id );
             // Update budget data. We give negative amount to reduce totals
@@ -79,7 +79,7 @@ const budgetData = (function() {
             const items = data.items[type];
             localStorage.setItem(type, JSON.stringify(items));
         },
-        sortItemsData: function(type, dir) {
+        sortItemsData(type, dir) {
             let sortedList;
             // Check the direction of sorting
             if( dir === 'desc' ) {
@@ -120,7 +120,7 @@ const budgetUI = (function() {
 
     return {
         DOMStrings,
-        addItemUI: function(type, id, text, amount) {
+        addItemUI(type, id, text, amount) {
 
             document.querySelector(`#${type}-list`)
                             .insertAdjacentHTML('beforeend',
@@ -128,15 +128,15 @@ const budgetUI = (function() {
                                 ${text} <span>${formatter.format(amount)} <a class="delete-this" id="${type}-${id}">&#10006;</a></span>
                             </li>`);
         },
-        updateBudgetUI: function(totalBudget, totalExp, totalInc) {
+        updateBudgetUI(totalBudget, totalExp, totalInc) {
             document.querySelector(DOMStrings().totalBudget).innerHTML = formatter.format(totalBudget);
             document.querySelector(DOMStrings().totalExpenses).innerHTML = formatter.format(totalExp);
             document.querySelector(DOMStrings().totalIncomes).innerHTML = formatter.format(totalInc);
         },
-        deleteItemUI: function(el) {
+        deleteItemUI(el) {
             el.closest('li').remove();
         },
-        displayListUI: function(type, arr) {
+        displayListUI(type, arr) {
             const html = arr.map(cur => {
                 return `
                     <li>
@@ -248,7 +248,7 @@ const controller = (function(budgetData, budgetUI) {
     }
 
     return {
-        init: function() {
+        init() {
             setupEventListeners();
             checkLocalStorage();
         }
